@@ -3,6 +3,7 @@ from flask_bootstrap import Bootstrap
 from config import config_options
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_mail import Mail
 from flask_uploads import UploadSet,configure_uploads,IMAGES
 
 
@@ -14,12 +15,14 @@ bootstrap = Bootstrap()
 db = SQLAlchemy()
 
 photos = UploadSet('photos', IMAGES)
+mail = Mail()
 
 def create_app(config_name):
 
     app = Flask(__name__)
 
     app.config.from_object(config_options[config_name])
+    mail.init_app(app)
 
     bootstrap.init_app(app)
     db.init_app(app)
