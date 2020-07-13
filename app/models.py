@@ -132,3 +132,12 @@ class Review(db.Model):
     movie_review = db.Column(db.String)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+
+     def save_review(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_reviews(cls,id):
+        reviews = Review.query.filter_by(movie_id=id).all()
+        return reviews
